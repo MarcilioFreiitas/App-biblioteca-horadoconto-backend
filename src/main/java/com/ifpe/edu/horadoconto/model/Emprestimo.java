@@ -1,5 +1,8 @@
 package com.ifpe.edu.horadoconto.model;
 
+import java.time.LocalDate;
+import java.time.LocalDateTime;
+
 import org.springframework.data.relational.core.mapping.Column;
 
 import com.fasterxml.jackson.annotation.JsonBackReference;
@@ -33,11 +36,11 @@ public class Emprestimo {
 
     @Column
     @NotNull
-    private String dataRetirada;
+    private LocalDate dataRetirada;
     
     @Column
     @NotNull
-    private String dataDevolucao;
+    private  LocalDate dataDevolucao;
     
     @Column
     @NotNull
@@ -48,8 +51,8 @@ public class Emprestimo {
     	
     }
 
-    public Emprestimo(Long id, Usuario usuario, Livro livro, @NotNull String dataRetirada,
-			@NotNull String dataDevolucao, @NotNull  StatusEmprestimo statusEmprestimo) {
+    public Emprestimo(Long id, Usuario usuario, Livro livro, @NotNull @NotNull LocalDate dataRetirada,
+			@NotNull @NotNull LocalDate dataDevolucao, @NotNull  StatusEmprestimo statusEmprestimo) {
 		super();
 		this.id = id;
 		this.usuario = usuario;
@@ -84,19 +87,19 @@ public class Emprestimo {
 		this.livro = livro;
 	}
 
-	public String getDataRetirada() {
+	public @NotNull LocalDate getDataRetirada() {
 		return dataRetirada;
 	}
 
-	public void setDataRetirada(String dataRetirada) {
+	public void setDataRetirada(@NotNull LocalDate dataRetirada) {
 		this.dataRetirada = dataRetirada;
 	}
 
-	public String getDataDevolucao() {
+	public @NotNull LocalDate getDataDevolucao() {
 		return dataDevolucao;
 	}
 
-	public void setDataDevolucao(String dataDevolucao) {
+	public void setDataDevolucao(@NotNull @NotNull @NotNull LocalDate dataDevolucao) {
 		this.dataDevolucao = dataDevolucao;
 	}
 

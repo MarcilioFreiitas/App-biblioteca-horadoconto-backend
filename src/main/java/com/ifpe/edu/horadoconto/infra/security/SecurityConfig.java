@@ -49,7 +49,8 @@ public class SecurityConfig {
 	                        .requestMatchers(HttpMethod.GET, "/emprestimo/listarEmprestimo").permitAll()
 	                        .requestMatchers(HttpMethod.POST, "/usuarios/salvar").permitAll()
 	                        .requestMatchers(HttpMethod.PUT, "/usuarios/alterar/**").permitAll()
-	                        .anyRequest().authenticated()
+	                        .requestMatchers(HttpMethod.GET, "/imagens/capas/**").permitAll()
+	                        	                       
 	                )
 	                .addFilterBefore(securityFilter, UsernamePasswordAuthenticationFilter.class)
 	                .build();
