@@ -53,10 +53,17 @@ public class LivroController {
 	    return ResponseEntity.ok(livros);
 	}
 	
-	
+	@GetMapping("/buscar/{id}")
+    public ResponseEntity listarPorId(@PathVariable Long id) {
+        Livro livro = livroService.buscarPorId(id);
+        if (livro != null) {
+            return ResponseEntity.ok(livro);
+        } else {
+            return ResponseEntity.status(HttpStatus.NOT_FOUND).body("Livro não encontrado");
+        }
+    }
 	
 
-	// Dentro do seu LivroController
 	
 
 }

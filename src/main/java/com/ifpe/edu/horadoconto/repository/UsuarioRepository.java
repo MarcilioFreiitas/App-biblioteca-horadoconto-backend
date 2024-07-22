@@ -1,5 +1,7 @@
 package com.ifpe.edu.horadoconto.repository;
 
+import java.util.Optional;
+
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.stereotype.Repository;
@@ -11,5 +13,8 @@ public interface UsuarioRepository extends JpaRepository<Usuario, Long>{
 
 	UserDetails	findByemail(String email);
 	UserDetails findBysenha(String senha);
+	Optional<Usuario> findById(Long id);
+
+	
 	
 }

@@ -1,11 +1,14 @@
 package com.ifpe.edu.horadoconto.service;
 
+import java.util.Optional;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.security.core.userdetails.UserDetailsService;
 import org.springframework.security.core.userdetails.UsernameNotFoundException;
 import org.springframework.stereotype.Service;
 
+import com.ifpe.edu.horadoconto.model.Usuario;
 import com.ifpe.edu.horadoconto.repository.AdminRepository;
 import com.ifpe.edu.horadoconto.repository.UsuarioRepository;
 
@@ -32,6 +35,15 @@ public class AuthService implements UserDetailsService {
 	        }
 	        
 	        return userDetails;
+	    }
+	    
+	    public Usuario findById(Long id) {
+	        Optional<Usuario> usuarioOpt = usuarioRepository.findById(id);
+	        if (usuarioOpt.isPresent()) {
+	            return usuarioOpt.get();
+	        } else {
+	            throw new UsernameNotFoundException("Usuário não encontrado com o ID: " + id);
+	        }
 	    }
 
 }

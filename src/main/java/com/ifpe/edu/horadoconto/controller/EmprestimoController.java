@@ -26,7 +26,7 @@ public class EmprestimoController {
 	@Autowired
 	private EmprestimoService emprestimoService;
 	
-	@PostMapping("/emprestar")
+	@PostMapping("/criarEmprestimo")
 	public ResponseEntity emprestar(@RequestBody Emprestimo emprestimo) {
 	    Emprestimo novoEmprestimo = emprestimoService.emprestar(emprestimo);
 	    return ResponseEntity.ok(novoEmprestimo);

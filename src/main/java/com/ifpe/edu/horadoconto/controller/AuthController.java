@@ -1,5 +1,7 @@
 package com.ifpe.edu.horadoconto.controller;
 
+import java.util.Optional;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
 import org.springframework.security.authentication.AuthenticationManager;
@@ -7,8 +9,10 @@ import org.springframework.security.authentication.UsernamePasswordAuthenticatio
 
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.web.bind.annotation.CrossOrigin;
+import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
+import org.springframework.web.bind.annotation.RequestHeader;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
@@ -33,11 +37,7 @@ public class AuthController {
     
     @Autowired
     private TokenService tokenService;
-	
-	
-    
-    
-    
+
 	@PostMapping("/login")
 	public ResponseEntity login(@RequestBody @Valid AuthDTO data) {
 	var usernamePassword = new UsernamePasswordAuthenticationToken(data.email(), data.senha());	
@@ -46,11 +46,9 @@ public class AuthController {
     var token = tokenService.generateToken((Usuario) auth.getPrincipal());
 
     return ResponseEntity.ok(new LoginResponseDTO(token));
-    		
-    	
+    			
 	}
 
-	
 	@PostMapping("/loginadmin")
 	public ResponseEntity loginAdmin(@RequestBody @Valid AuthDTO data) {
 	var usernamePassword = new UsernamePasswordAuthenticationToken(data.email(), data.senha());	
@@ -59,10 +57,8 @@ public class AuthController {
     var token = tokenService.generateTokenAdmin((Admin) auth.getPrincipal());
 
     return ResponseEntity.ok(new LoginResponseDTO(token));
-    		
-    	
+    			
 	}
-	
 	
 	
 	@PostMapping("/register")
@@ -77,8 +73,16 @@ public class AuthController {
 
 	    return ResponseEntity.ok().build();
 	}
+	
+	@GetMapping("/me")
+	public ResponseEntity<Optional<Usuario>> me(@RequestHeader("Authorization") String token) {
+	    // Extrai o ID do usuário do token
+	    long idUsuario = tokenService.getUserIdFromToken(token);
 
-	
-	
-	
+	    // Busca o usuário no banco de dados
+	    Optional<Usuario> usuario = repository.findById(idUsuario);
+
+	    // Retorna o usuário
+	    return ResponseEntity.ok(usuario);
+	}
 }
