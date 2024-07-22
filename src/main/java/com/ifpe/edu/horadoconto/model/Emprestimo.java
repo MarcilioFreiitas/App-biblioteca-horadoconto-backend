@@ -51,8 +51,8 @@ public class Emprestimo {
     	
     }
 
-    public Emprestimo(Long id, Usuario usuario, Livro livro, @NotNull @NotNull LocalDate dataRetirada,
-			@NotNull @NotNull LocalDate dataDevolucao, @NotNull  StatusEmprestimo statusEmprestimo) {
+    public Emprestimo(Long id, Usuario usuario, Livro livro, @NotNull  LocalDate dataRetirada,
+			@NotNull LocalDate dataDevolucao, @NotNull  StatusEmprestimo statusEmprestimo) {
 		super();
 		this.id = id;
 		this.usuario = usuario;
@@ -99,7 +99,7 @@ public class Emprestimo {
 		return dataDevolucao;
 	}
 
-	public void setDataDevolucao(@NotNull @NotNull @NotNull LocalDate dataDevolucao) {
+	public void setDataDevolucao(@NotNull LocalDate dataDevolucao) {
 		this.dataDevolucao = dataDevolucao;
 	}
 

@@ -46,12 +46,11 @@ public class SecurityConfig {
 	                        .requestMatchers(HttpMethod.DELETE, "/usuarios/apagar/**").permitAll()
 	                        .requestMatchers(HttpMethod.GET, "/usuarios/listar").permitAll()
 	                        .requestMatchers(HttpMethod.PUT, "/livros/alterar/**").permitAll()
-	                        .requestMatchers(HttpMethod.POST, "/emprestimo/criarEmprestimo").permitAll()
-	                        .requestMatchers(HttpMethod.GET, "/emprestimo/listarEmprestimo").permitAll()
 	                        .requestMatchers(HttpMethod.POST, "/usuarios/salvar").permitAll()
 	                        .requestMatchers(HttpMethod.PUT, "/usuarios/alterar/**").permitAll()
 	                        .requestMatchers(HttpMethod.GET, "/imagens/capas/**").permitAll()
 	                        .requestMatchers(HttpMethod.GET, "/auth/me").permitAll()
+	                        .requestMatchers(HttpMethod.POST, "/emprestimo/criarEmprestimo").permitAll()
 	                        	                       
 	                )
 	                .addFilterBefore(securityFilter, UsernamePasswordAuthenticationFilter.class)

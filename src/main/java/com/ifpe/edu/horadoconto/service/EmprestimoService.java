@@ -22,7 +22,12 @@ public class EmprestimoService {
 	LivroRepository livroRepository;
 
 	public Emprestimo emprestar(Emprestimo emprestimo) {
-		 // Verificar se o livro está disponível para empréstimo
+	    // Verificar se o livro está associado ao empréstimo
+	    if (emprestimo.getLivro() == null) {
+	        throw new IllegalArgumentException("O livro associado ao empréstimo não pode ser null.");
+	    }
+
+	    // Verificar se o livro está disponível para empréstimo
 	    Livro livro = livroRepository.findById(emprestimo.getLivro().getId())
 	            .orElseThrow(() -> new RuntimeException("Livro não encontrado"));
 
@@ -37,6 +42,7 @@ public class EmprestimoService {
 	    // Salvar o empréstimo
 	    return emprestimorepository.save(emprestimo);
 	}
+
 
 	public Emprestimo alterar(Long id, Emprestimo emprestimo) {
 		// Buscar o empréstimo existente

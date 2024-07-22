@@ -4,7 +4,7 @@ public enum StatusEmprestimo {
 
 	ATIVO, 
 	ATRASADO,
-	PENDENDE, 
+	PENDENTE, 
 	APROVADO,
 	REJEITADO
 
