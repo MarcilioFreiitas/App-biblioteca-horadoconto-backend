@@ -40,10 +40,10 @@ public class EmprestimoController {
 	
 	
 	@GetMapping("/listarEmprestimo")
-	public ResponseEntity listarEmprestimo( String orderBy) {
-	    List<Emprestimo> emprestimo = emprestimoService.listar(orderBy);
-	    return ResponseEntity.ok(emprestimo);
-	}
+    public ResponseEntity<List<EmprestimoDTO>> listarEmprestimo(@RequestParam(required = false) String orderBy) {
+        List<EmprestimoDTO> emprestimos = emprestimoService.listar(orderBy);
+        return ResponseEntity.ok(emprestimos);
+    }
 	
 	@DeleteMapping("/apagarEmpresitmo/{id}")
 	public ResponseEntity deletarEmprestimo(@PathVariable Long id) {
@@ -61,6 +61,12 @@ public class EmprestimoController {
 	public ResponseEntity<Emprestimo> rejeitar(@PathVariable Long id) {
 	    Emprestimo emprestimo = emprestimoService.rejeitar(id);
 	    return ResponseEntity.ok(emprestimo);
+	}
+	
+	@GetMapping("/listarEmprestimosUsuario/{id}")
+	public ResponseEntity<List<EmprestimoDTO>> listarEmprestimosUsuario(@PathVariable Long id) {
+	    List<EmprestimoDTO> emprestimos = emprestimoService.listarPorUsuario(id);
+	    return ResponseEntity.ok(emprestimos);
 	}
 	
 	

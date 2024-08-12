@@ -1,11 +1,9 @@
 package com.ifpe.edu.horadoconto.model;
 
-public enum StatusEmprestimo {
-
-	ATIVO, 
+public enum StatusEmprestimo {	
 	ATRASADO,
-	PENDENTE, 
-	APROVADO,
-	REJEITADO
-
+	REJEITADO,
+	PENDENTE,
+	EMPRESTADO,
+	DEVOLVIDO
 }

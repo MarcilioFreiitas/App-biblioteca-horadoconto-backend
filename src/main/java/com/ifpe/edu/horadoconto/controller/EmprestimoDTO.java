@@ -1,9 +1,23 @@
 package com.ifpe.edu.horadoconto.controller;
 
-import com.ifpe.edu.horadoconto.model.Livro;
 import com.ifpe.edu.horadoconto.model.StatusEmprestimo;
-import com.ifpe.edu.horadoconto.model.Usuario;
 
-public record EmprestimoDTO(Usuario usuario, Livro livro, String dataRetirada , String dataDevolucao, StatusEmprestimo statusEmprestimo) {
+import java.time.LocalDate;
+import java.time.format.DateTimeFormatter;
 
+public record EmprestimoDTO(
+    Long id,
+    String nomeUsuario,
+    String tituloLivro,
+    LocalDate dataRetirada,
+    LocalDate dataDevolucao,
+    StatusEmprestimo statusEmprestimo
+) {
+    public String getDataRetirada() {
+        return dataRetirada.format(DateTimeFormatter.ISO_LOCAL_DATE);
+    }
+
+    public String getDataDevolucao() {
+        return dataDevolucao.format(DateTimeFormatter.ISO_LOCAL_DATE);
+    }
 }
