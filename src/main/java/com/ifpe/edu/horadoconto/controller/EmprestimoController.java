@@ -69,6 +69,19 @@ public class EmprestimoController {
 	    return ResponseEntity.ok(emprestimos);
 	}
 	
+	@PutMapping("/devolverEmprestimo/{id}")
+	public ResponseEntity<Emprestimo> devolverEmprestimo(@PathVariable Long id) {
+	    Emprestimo emprestimoDevolvido = emprestimoService.devolver(id);
+	    return ResponseEntity.ok(emprestimoDevolvido);
+	}
+
+	
+	@PutMapping("/renovarEmprestimo/{id}")
+	public ResponseEntity<Emprestimo> renovarEmprestimo(@PathVariable Long id, @RequestBody Emprestimo emprestimo) {
+	    Emprestimo emprestimoRenovado = emprestimoService.renovar(id, emprestimo.getDataDevolucao());
+	    return ResponseEntity.ok(emprestimoRenovado);
+	}
+
 	
 	
 }

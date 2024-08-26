@@ -10,6 +10,7 @@ import org.springframework.scheduling.annotation.Scheduled;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
+import com.ifpe.edu.horadoconto.ResourceNotFoundException;
 import com.ifpe.edu.horadoconto.controller.EmprestimoDTO;
 import com.ifpe.edu.horadoconto.model.Emprestimo;
 import com.ifpe.edu.horadoconto.model.Livro;
@@ -163,5 +164,41 @@ public class EmprestimoService {
                 emprestimo.getStatusEmprestimo()
         );
     }
+    public Emprestimo devolver(Long id) {
+        Emprestimo emprestimo = emprestimorepository.findById(id)
+                .orElseThrow(() -> new ResourceNotFoundException("Empréstimo não encontrado com o ID: " + id));
+        
+        // Altere o status do empréstimo para "devolvido"
+        emprestimo.setStatusEmprestimo(StatusEmprestimo.DEVOLVIDO);
+        
+        // Atualize a disponibilidade do livro para "disponível"
+        Livro livro = emprestimo.getLivro();
+        livro.setDisponibilidade(true);
+        
+        // Salve as alterações no banco de dados
+        emprestimorepository.save(emprestimo);
+        livroRepository.save(livro);
+        
+        return emprestimo;
+    }
+
+    public Emprestimo renovar(Long id, LocalDate novaDataDevolucao) {
+        // Busca o empréstimo pelo ID
+        Emprestimo emprestimo = emprestimorepository.findById(id)
+                .orElseThrow(() -> new ResourceNotFoundException("Empréstimo não encontrado com o ID: " + id));
+
+        // Verifica se o status permite renovação (por exemplo, "emprestado")
+        if (emprestimo.getStatusEmprestimo() != StatusEmprestimo.EMPRESTADO) {
+            throw new IllegalStateException("Não é possível renovar um empréstimo com status diferente de 'emprestado'.");
+        }
+
+        // Atualiza a data de devolução
+        emprestimo.setDataDevolucao(novaDataDevolucao);
+
+        // Salva as alterações no banco de dados
+        return emprestimorepository.save(emprestimo);
+    }
+
+    
 
 }

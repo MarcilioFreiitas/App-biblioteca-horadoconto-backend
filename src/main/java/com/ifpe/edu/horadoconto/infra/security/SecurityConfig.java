@@ -65,6 +65,9 @@ public class SecurityConfig {
 	                .requestMatchers(HttpMethod.GET, "/emprestimo/listarEmprestimo").permitAll()
 	                .requestMatchers(HttpMethod.PUT, "/emprestimo/aprovar/**").permitAll()
 	                .requestMatchers(HttpMethod.GET, "/emprestimo/listarEmprestimosUsuario/**").permitAll()
+	                .requestMatchers(HttpMethod.PUT, "/emprestimo/rejeitar/**").permitAll()
+	                .requestMatchers(HttpMethod.PUT, "/emprestimo/devolverEmprestimo/**").permitAll()
+	                .requestMatchers(HttpMethod.PUT, "/emprestimo/renovarEmprestimo/**").permitAll()
 	            )
 	            .addFilterBefore(securityFilter, UsernamePasswordAuthenticationFilter.class);
 
