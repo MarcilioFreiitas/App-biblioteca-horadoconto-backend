@@ -32,9 +32,10 @@ public class Livro {
     @NotNull
     private String genero;
 	
-	@Column
-    @NotNull
-    private String sinopse;
+	@Column(value = "TEXT")
+	@NotNull
+	private String sinopse;
+
 	
 	@Column
     @NotNull

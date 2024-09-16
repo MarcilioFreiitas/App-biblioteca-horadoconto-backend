@@ -29,14 +29,27 @@ import jakarta.validation.Valid;
 @RequestMapping("/auth")
 public class AuthController {
 
-	@Autowired
+
+
+	
     private AuthenticationManager authenticationManager;
     
-	@Autowired
+	
     private UsuarioRepository repository;
     
-    @Autowired
+    
     private TokenService tokenService;
+    
+    
+	public AuthController(AuthenticationManager authenticationManager, UsuarioRepository repository,
+			TokenService tokenService) {
+		super();
+		this.authenticationManager = authenticationManager;
+		this.repository = repository;
+		this.tokenService = tokenService;
+	}
+    
+    
 
 	@PostMapping("/login")
 	public ResponseEntity login(@RequestBody @Valid AuthDTO data) {

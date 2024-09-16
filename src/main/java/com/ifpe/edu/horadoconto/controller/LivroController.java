@@ -21,6 +21,10 @@ public class LivroController {
 
 	@Autowired
 	private LivroService livroService;
+	
+	public LivroController(LivroService livroService) {
+		this.livroService = livroService;
+	}
 
 	
 	@PostMapping("/salvar")

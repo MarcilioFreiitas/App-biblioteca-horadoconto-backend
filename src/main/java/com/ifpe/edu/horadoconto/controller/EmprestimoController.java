@@ -23,8 +23,14 @@ import com.ifpe.edu.horadoconto.service.EmprestimoService;
 @RequestMapping("/emprestimo")
 public class EmprestimoController {
 
-	@Autowired
+	
 	private EmprestimoService emprestimoService;
+	
+	public EmprestimoController(EmprestimoService emprestimoService) {
+	 this.emprestimoService = emprestimoService;
+	}
+	
+	
 	
 	@PostMapping("/criarEmprestimo")
 	public ResponseEntity emprestar(@RequestBody Emprestimo emprestimo) {
