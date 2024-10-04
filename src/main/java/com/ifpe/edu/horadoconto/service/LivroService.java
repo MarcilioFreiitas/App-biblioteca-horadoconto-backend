@@ -13,8 +13,11 @@ import org.springframework.stereotype.Service;
 import org.springframework.web.multipart.MultipartFile;
 
 import com.ifpe.edu.horadoconto.ResourceNotFoundException;
+import com.ifpe.edu.horadoconto.model.Genero;
 import com.ifpe.edu.horadoconto.model.Livro;
 import com.ifpe.edu.horadoconto.repository.LivroRepository;
+
+import jakarta.validation.constraints.NotNull;
 
 @Service
 public class LivroService {
@@ -22,7 +25,7 @@ public class LivroService {
     @Autowired
     private LivroRepository repository;
 
-    public Livro criarLivro(String autor, String titulo, String genero, boolean disponibilidade, String sinopse, String isbn, MultipartFile imagem) {
+    public Livro criarLivro(String autor, String titulo, @NotNull Genero genero, boolean disponibilidade, String sinopse, String isbn, MultipartFile imagem) {
         // Verifique se o livro já existe
         Optional<Livro> livroExistente = repository.findByTituloAndAutor(titulo, autor);
         if (livroExistente.isPresent()) {

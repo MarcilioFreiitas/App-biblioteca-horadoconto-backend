@@ -7,6 +7,8 @@ import org.springframework.data.relational.core.mapping.Column;
 import com.fasterxml.jackson.annotation.JsonManagedReference;
 
 import jakarta.persistence.Entity;
+import jakarta.persistence.EnumType;
+import jakarta.persistence.Enumerated;
 import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.GenerationType;
 import jakarta.persistence.Id;
@@ -28,9 +30,10 @@ public class Livro {
     @NotNull
     private String autor;
 	
-	@Column
+	@Enumerated(EnumType.STRING)
+    @Column
     @NotNull
-    private String genero;
+    private Genero genero;
 	
 	@Column(value = "TEXT")
 	@NotNull
@@ -57,7 +60,7 @@ public class Livro {
     
     
     
-    public Livro(Long id, @NotNull String titulo, @NotNull String autor, @NotNull String genero,
+    public Livro(Long id, @NotNull String titulo, @NotNull String autor, @NotNull @NotNull Genero genero,
 			@NotNull String sinopse, @NotNull String isbn, @NotNull String imagem_capa, @NotNull Boolean disponibilidade) {
 		
     	super();
@@ -100,11 +103,11 @@ public class Livro {
 		this.autor = autor;
 	}
 
-	public String getGenero() {
+	public @NotNull Genero getGenero() {
 		return genero;
 	}
 
-	public void setGenero(String genero) {
+	public void setGenero(@NotNull Genero genero) {
 		this.genero = genero;
 	}
 

@@ -8,8 +8,13 @@ import java.nio.file.Files;
 import java.nio.file.Path;
 import java.nio.file.Paths;
 import org.springframework.web.bind.annotation.*;
+
+import com.ifpe.edu.horadoconto.model.Genero;
 import com.ifpe.edu.horadoconto.model.Livro;
 import com.ifpe.edu.horadoconto.service.LivroService;
+
+import jakarta.validation.constraints.NotNull;
+
 import java.util.List;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
@@ -30,7 +35,7 @@ public class LivroController {
 	@PostMapping("/salvar")
 	public ResponseEntity salvar(@RequestParam("autor") String autor,
 	                             @RequestParam("titulo") String titulo,
-	                             @RequestParam("genero") String genero,
+	                             @RequestParam("genero") @NotNull Genero genero,
 	                             @RequestParam("disponibilidade") boolean disponibilidade,
 	                             @RequestParam("sinopse") String sinopse,
 	                             @RequestParam("isbn") String isbn,
