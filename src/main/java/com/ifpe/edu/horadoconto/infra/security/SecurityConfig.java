@@ -69,6 +69,8 @@ public class SecurityConfig {
 	                .requestMatchers(HttpMethod.PUT, "/emprestimo/devolverEmprestimo/**").permitAll()
 	                .requestMatchers(HttpMethod.PUT, "/emprestimo/renovarEmprestimo/**").permitAll()
 	                .requestMatchers(HttpMethod.PATCH, "/usuarios/alterar/**").permitAll()
+	                .requestMatchers(HttpMethod.POST, "/password/reset").permitAll()
+	                .requestMatchers(HttpMethod.POST, "/password/save").permitAll()
 	            )
 	            .addFilterBefore(securityFilter, UsernamePasswordAuthenticationFilter.class);
 

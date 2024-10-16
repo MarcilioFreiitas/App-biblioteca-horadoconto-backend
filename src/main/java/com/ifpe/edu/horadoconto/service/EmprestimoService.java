@@ -37,6 +37,14 @@ public class EmprestimoService {
 	    Livro livro = livroRepository.findById(emprestimo.getLivro().getId())
 	            .orElseThrow(() -> new RuntimeException("Livro não encontrado"));
 
+	    LocalDate dataEmprestimo = emprestimo.getDataRetirada();
+	    LocalDate dataMaximaDevolucao = dataEmprestimo.plusMonths(1);
+
+	    if (emprestimo.getDataDevolucao().isAfter(dataMaximaDevolucao)) {
+	        throw new IllegalArgumentException("A data de devolução não pode ultrapassar um mês a partir da data de empréstimo.");
+	    }
+	    
+	    
 	    if (!livro.getDisponibilidade()) {
 	        throw new RuntimeException("Livro não está disponível para empréstimo");
 	    }
@@ -192,12 +200,21 @@ public class EmprestimoService {
             throw new IllegalStateException("Não é possível renovar um empréstimo com status diferente de 'emprestado'.");
         }
 
+        // Verifica se a nova data de devolução não ultrapassa um mês a partir da data de empréstimo original
+        LocalDate dataEmprestimo = emprestimo.getDataRetirada();
+        LocalDate dataMaximaDevolucao = dataEmprestimo.plusMonths(1);
+
+        if (novaDataDevolucao.isAfter(dataMaximaDevolucao)) {
+            throw new IllegalStateException("A nova data de devolução não pode ultrapassar um mês a partir da data de empréstimo.");
+        }
+
         // Atualiza a data de devolução
         emprestimo.setDataDevolucao(novaDataDevolucao);
 
         // Salva as alterações no banco de dados
         return emprestimorepository.save(emprestimo);
     }
+
 
     
 
