@@ -17,8 +17,8 @@ public interface EmprestimoRepository extends JpaRepository<Emprestimo, Long> {
 		       "FROM Emprestimo e " +
 		       "JOIN e.usuario u " +
 		       "JOIN e.livro l")
-		List<EmprestimoDTO> findAllEmprestimos();
 	
-	 List<Emprestimo> findByUsuarioId(Long id);
+	List<EmprestimoDTO> findAllEmprestimos();
+	List<Emprestimo> findByUsuarioId(Long id);
 }
 

@@ -71,6 +71,10 @@ public class SecurityConfig {
 	                .requestMatchers(HttpMethod.PATCH, "/usuarios/alterar/**").permitAll()
 	                .requestMatchers(HttpMethod.POST, "/password/reset").permitAll()
 	                .requestMatchers(HttpMethod.POST, "/password/save").permitAll()
+	                .requestMatchers(HttpMethod.GET, "/password-reset.html").permitAll()
+	                
+	                
+	                
 	            )
 	            .addFilterBefore(securityFilter, UsernamePasswordAuthenticationFilter.class);
 

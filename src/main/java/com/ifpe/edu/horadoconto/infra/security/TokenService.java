@@ -28,6 +28,7 @@ public class TokenService {
     @Autowired
     private UsuarioRepository repository;
     
+    
  
     
     public String generateToken(Usuario user) {

@@ -12,7 +12,7 @@ import org.springframework.data.domain.Sort;
 import org.springframework.stereotype.Service;
 import org.springframework.web.multipart.MultipartFile;
 
-import com.ifpe.edu.horadoconto.ResourceNotFoundException;
+import com.ifpe.edu.horadoconto.exception.ResourceNotFoundException;
 import com.ifpe.edu.horadoconto.model.Genero;
 import com.ifpe.edu.horadoconto.model.Livro;
 import com.ifpe.edu.horadoconto.repository.LivroRepository;

@@ -1,7 +1,6 @@
 package com.ifpe.edu.horadoconto.model;
 
-import java.sql.Date;
-
+import java.util.Date;
 import jakarta.persistence.Entity;
 import jakarta.persistence.FetchType;
 import jakarta.persistence.GeneratedValue;
@@ -12,45 +11,34 @@ import jakarta.persistence.OneToOne;
 
 @Entity
 public class PasswordResetToken {
-
     @Id
     @GeneratedValue(strategy = GenerationType.AUTO)
     private Long id;
-
     private String token;
-
+    
     @OneToOne(targetEntity = Usuario.class, fetch = FetchType.EAGER)
     @JoinColumn(nullable = false, name = "user_id")
     private Usuario usuario;
-
     private Date expiryDate;
 
-    public PasswordResetToken() {
-    	
+    // Construtor padrão
+    public PasswordResetToken() {}
+
+    // Construtor que inicializa todos os campos
+    public PasswordResetToken(Long id, String token, Usuario usuario, Date expiryDate) {
+        this.id = id;
+        this.token = token;
+        this.usuario = usuario;
+        this.expiryDate = expiryDate;
     }
 
-	public PasswordResetToken(Long id, String token, Usuario usuario, Date expiryDate) {
-		super();
-		this.id = id;
-		this.token = token;
-		this.usuario = usuario;
-		this.expiryDate = expiryDate;
-	}
+    // Construtor que inicializa apenas token e usuario
+    public PasswordResetToken(String token, Usuario usuario, Date expiryDate) {
+        this.token = token;
+        this.usuario = usuario;
+        this.expiryDate = expiryDate;
+    }
 
-	
-	
-	
-	
-	public PasswordResetToken(String token, Usuario usuario) {
-		super();
-		this.token = token;
-		this.usuario = usuario;
-	}
-
-	
-	
-	
-	
 	public Long getId() {
 		return id;
 	}
@@ -82,7 +70,6 @@ public class PasswordResetToken {
 	public void setExpiryDate(Date expiryDate) {
 		this.expiryDate = expiryDate;
 	}
-    
-    
-    
+
+    // Getters e setters
 }

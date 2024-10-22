@@ -10,8 +10,9 @@ import org.springframework.scheduling.annotation.Scheduled;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
-import com.ifpe.edu.horadoconto.ResourceNotFoundException;
+
 import com.ifpe.edu.horadoconto.controller.EmprestimoDTO;
+import com.ifpe.edu.horadoconto.exception.ResourceNotFoundException;
 import com.ifpe.edu.horadoconto.model.Emprestimo;
 import com.ifpe.edu.horadoconto.model.Livro;
 import com.ifpe.edu.horadoconto.model.StatusEmprestimo;

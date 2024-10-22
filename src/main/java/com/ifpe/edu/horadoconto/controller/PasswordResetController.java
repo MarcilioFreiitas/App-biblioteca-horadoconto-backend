@@ -7,7 +7,6 @@ import org.springframework.web.bind.annotation.*;
 @RestController
 @RequestMapping("/password")
 public class PasswordResetController {
-
     @Autowired
     private PasswordResetService passwordResetService;
 
@@ -17,7 +16,7 @@ public class PasswordResetController {
     }
 
     @PostMapping("/save")
-    public String savePassword(@RequestParam("token") String token, @RequestParam("password") String password) {
-        return passwordResetService.saveNewPassword(token, password);
+    public String savePassword(@RequestBody PasswordResetRequest request) {
+        return passwordResetService.saveNewPassword(request.getToken(), request.getPassword());
     }
 }
