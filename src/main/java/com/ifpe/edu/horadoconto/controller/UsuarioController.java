@@ -9,6 +9,7 @@ import com.ifpe.edu.horadoconto.repository.UsuarioRepository;
 
 import java.util.List;
 import java.util.Map;
+import java.util.stream.Collectors;
 
 @RestController
 @RequestMapping("/usuarios")
@@ -59,8 +60,28 @@ public class UsuarioController {
     }
 
     @GetMapping("/listar")
-    public ResponseEntity<List<Usuario>> listar() {
+    public ResponseEntity<List<UsuarioDTO>> listar() {
         List<Usuario> usuarios = usuarioRepository.findAll();
-        return new ResponseEntity<>(usuarios, HttpStatus.OK);
+        List<UsuarioDTO> usuariosDTO = usuarios.stream()
+            .map(usuario -> new UsuarioDTO(
+                usuario.getId(),
+                usuario.getNome(),
+                usuario.getSobreNome(),
+                usuario.getCpf(),
+                usuario.getEmail(),
+                usuario.getRole(),
+                usuario.getEmprestimos().stream()
+                    .map(emprestimo -> new EmprestimoDTO(
+                        emprestimo.getId(), 
+                        emprestimo.getUsuario().getNome(), 
+                        emprestimo.getLivro().getTitulo(), 
+                        emprestimo.getDataRetirada(), 
+                        emprestimo.getDataDevolucao(), 
+                        emprestimo.getStatusEmprestimo())
+                    ).collect(Collectors.toList())
+            )).collect(Collectors.toList());
+        return new ResponseEntity<>(usuariosDTO, HttpStatus.OK);
     }
+
+
 }

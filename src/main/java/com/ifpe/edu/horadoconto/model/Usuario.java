@@ -127,6 +127,17 @@ public class Usuario implements UserDetails {
 			this.role = role;
 		}
 
+		
+		
+		
+		public Set<Emprestimo> getEmprestimos() {
+			return emprestimos;
+		}
+
+		public void setEmprestimos(Set<Emprestimo> emprestimos) {
+			this.emprestimos = emprestimos;
+		}
+
 		@Override
 		public Collection<? extends GrantedAuthority> getAuthorities() {
 			if(this.role == UserRoles.ADMIN) return List.of(new SimpleGrantedAuthority("ROLE_ADMIN"), new SimpleGrantedAuthority("ROLE_USER"));
