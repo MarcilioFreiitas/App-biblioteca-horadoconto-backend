@@ -3,10 +3,6 @@ import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.multipart.MultipartFile;
 
-import java.io.IOException;
-import java.nio.file.Files;
-import java.nio.file.Path;
-import java.nio.file.Paths;
 import org.springframework.web.bind.annotation.*;
 
 import com.ifpe.edu.horadoconto.model.Genero;
@@ -45,10 +41,22 @@ public class LivroController {
 	}
 
 	@PutMapping("/alterar/{id}")
-	public ResponseEntity alterar(@PathVariable Long id, @RequestBody Livro livro) {
-	    Livro livroAtualizado = livroService.alterar(id, livro);
+	public ResponseEntity<?> alterar(
+	    @PathVariable Long id,
+	    @RequestParam("titulo") String titulo,
+	    @RequestParam("autor") String autor,
+	    @RequestParam("genero") Genero genero,
+	    @RequestParam("sinopse") String sinopse,
+	    @RequestParam("isbn") String isbn,
+	    @RequestParam("disponibilidade") boolean disponibilidade,
+	    @RequestParam(value = "imagem_capa", required = false) MultipartFile imagemCapa
+	) {
+	    Livro livroAtualizado = livroService.alterar(id, titulo, autor, genero, sinopse, isbn, disponibilidade, imagemCapa);
 	    return ResponseEntity.ok(livroAtualizado);
 	}
+
+
+
 
 	@DeleteMapping("/apagar/{id}")
 	public ResponseEntity apagar(@PathVariable Long id) {

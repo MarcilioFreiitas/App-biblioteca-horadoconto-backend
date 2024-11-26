@@ -3,6 +3,7 @@ package com.ifpe.edu.horadoconto.controller;
 import java.util.Optional;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.security.authentication.AuthenticationManager;
 import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
@@ -76,7 +77,8 @@ public class AuthController {
 	
 	@PostMapping("/register")
 	public ResponseEntity register(@RequestBody @Valid RegisterDTO data){
-	    if(this.repository.findByemail(data.email()) != null) return ResponseEntity.badRequest().build();
+		if (this.repository.findByEmail(data.email()) != null) { return ResponseEntity.status(HttpStatus.CONFLICT).body("E-mail já cadastrado"); }
+		if (this.repository.findBycpf(data.cpf()) != null) { return ResponseEntity.status(HttpStatus.CONFLICT).body("CPF já cadastrado"); }
 
 	    String encryptedPassword = new BCryptPasswordEncoder().encode(data.senha());
 	    // Adicionando os novos campos ao construtor do Usuario

@@ -4,12 +4,14 @@ import java.io.IOException;
 import java.nio.file.Files;
 import java.nio.file.Path;
 import java.nio.file.Paths;
+import java.nio.file.StandardCopyOption;
 import java.util.List;
 import java.util.Optional;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Sort;
 import org.springframework.stereotype.Service;
+import org.springframework.util.StringUtils;
 import org.springframework.web.multipart.MultipartFile;
 
 import com.ifpe.edu.horadoconto.exception.ResourceNotFoundException;
@@ -60,21 +62,46 @@ public class LivroService {
     }
 
 
-    public Livro alterar(Long id, Livro livro) {
-        Livro livroExistente = repository.findById(id).orElseThrow(() -> new ResourceNotFoundException("Livro não encontrado"));
-        if (!livroExistente.equals(livro)) {
-            livroExistente.setTitulo(livro.getTitulo());
-            livroExistente.setAutor(livro.getAutor());
-            livroExistente.setGenero(livro.getGenero());
-            livroExistente.setDisponibilidade(livro.getDisponibilidade());
-            livroExistente.setSinopse(livro.getSinopse());
-            livroExistente.setIsbn(livro.getIsbn());
-            livroExistente.setImagem_capa(livro.getImagem_capa());
-            // atualizar outros campos...
-            return repository.save(livroExistente);
+    public Livro alterar(Long id, String titulo, String autor, Genero genero, String sinopse, String isbn, boolean disponibilidade, MultipartFile imagemCapa) {
+        Livro livroExistente = repository.findById(id)
+                .orElseThrow(() -> new ResourceNotFoundException("Livro não encontrado"));
+
+        livroExistente.setTitulo(titulo);
+        livroExistente.setAutor(autor);
+        livroExistente.setGenero(genero);
+        livroExistente.setDisponibilidade(disponibilidade);
+        livroExistente.setSinopse(sinopse);
+        livroExistente.setIsbn(isbn);
+
+        // Se uma nova imagem de capa foi enviada, substitua a existente
+        if (imagemCapa != null && !imagemCapa.isEmpty()) {
+            try {
+                String fileName = StringUtils.cleanPath(imagemCapa.getOriginalFilename());
+                Path uploadPath = Paths.get("src/main/resources/static/imagens/capas/");
+                if (!Files.exists(uploadPath)) {
+                    Files.createDirectories(uploadPath);
+                }
+
+                // Excluir imagem antiga se existir
+                if (livroExistente.getImagem_capa() != null) {
+                    Path oldImagePath = Paths.get("src/main/resources/static" + livroExistente.getImagem_capa());
+                    Files.deleteIfExists(oldImagePath);
+                }
+
+                // Salva a nova imagem
+                Files.copy(imagemCapa.getInputStream(), uploadPath.resolve(fileName), StandardCopyOption.REPLACE_EXISTING);
+                livroExistente.setImagem_capa("/imagens/capas/" + fileName); // Ajuste o caminho conforme necessário
+            } catch (Exception e) {
+                throw new RuntimeException("Falha ao salvar a imagem", e);
+            }
         }
-        return livroExistente;
+
+        return repository.save(livroExistente);
     }
+
+
+
+
 
     public void apagar(Long id) {
         if (!repository.existsById(id)) {

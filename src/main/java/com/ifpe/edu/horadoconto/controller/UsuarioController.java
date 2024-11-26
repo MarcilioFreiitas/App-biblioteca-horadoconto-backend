@@ -20,7 +20,7 @@ public class UsuarioController {
 
     @PostMapping("/salvar")
     public ResponseEntity<Usuario> salvar(@RequestBody Usuario usuario) {
-        Usuario novoUsuario = usuarioRepository.save(usuario);
+    	Usuario novoUsuario = usuarioRepository.save(usuario);
         return new ResponseEntity<>(novoUsuario, HttpStatus.CREATED);
     }
 
