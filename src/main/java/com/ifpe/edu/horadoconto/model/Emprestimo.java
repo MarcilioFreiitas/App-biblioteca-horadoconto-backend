@@ -8,6 +8,7 @@ import org.springframework.data.relational.core.mapping.Column;
 import com.fasterxml.jackson.annotation.JsonBackReference;
 
 import jakarta.persistence.Entity;
+import jakarta.persistence.Enumerated;
 import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.GenerationType;
 import jakarta.persistence.Id;
@@ -41,6 +42,7 @@ public class Emprestimo {
     @Column
     @NotNull
     private  LocalDate dataDevolucao;
+    
     
     @Column
     @NotNull

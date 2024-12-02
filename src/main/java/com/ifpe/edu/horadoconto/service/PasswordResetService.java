@@ -26,6 +26,7 @@ public class PasswordResetService {
     @Autowired
     private EmailService emailService;
 
+    
     private BCryptPasswordEncoder passwordEncoder = new BCryptPasswordEncoder();
 
    
@@ -47,7 +48,7 @@ public class PasswordResetService {
         PasswordResetToken myToken = new PasswordResetToken(token, usuario, expiryDate);
         tokenRepository.save(myToken);
 
-        String resetUrl = "http://10.0.0.104:8080/password-reset.html?token=" + token;
+        String resetUrl = "http://10.0.0.105:8080/password-reset.html?token=" + token;
         String emailContent = "<html><body><p>Clique no link para redefinir sua senha: <a href=\"" + resetUrl + "\">Redefinir Senha</a></p></body></html>";
 
         emailService.sendEmail(email, "Redefinição de Senha", emailContent);

@@ -6,6 +6,7 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 import com.ifpe.edu.horadoconto.model.Usuario;
 import com.ifpe.edu.horadoconto.repository.UsuarioRepository;
+import com.ifpe.edu.horadoconto.service.UsuarioService;
 
 import java.util.List;
 import java.util.Map;
@@ -17,6 +18,9 @@ public class UsuarioController {
 
     @Autowired
     private UsuarioRepository usuarioRepository;
+    
+    @Autowired
+    private UsuarioService usuarioService;
 
     @PostMapping("/salvar")
     public ResponseEntity<Usuario> salvar(@RequestBody Usuario usuario) {
@@ -53,10 +57,13 @@ public class UsuarioController {
         return new ResponseEntity<>(usuarioAtualizado, HttpStatus.OK);
     }
 
-    @DeleteMapping("/apagar/{id}")
-    public ResponseEntity<Void> apagar(@PathVariable Long id) {
-        usuarioRepository.deleteById(id);
-        return new ResponseEntity<>(HttpStatus.NO_CONTENT);
+    @DeleteMapping("/apagar/{id}") public ResponseEntity<String> apagar(@PathVariable Long id) 
+    { try { 
+    	usuarioService.excluirUsuario(id); 
+    	return new ResponseEntity<>(HttpStatus.NO_CONTENT);
+    	} catch (IllegalStateException e) { 
+    		return ResponseEntity.badRequest().body(e.getMessage());
+    		}
     }
 
     @GetMapping("/listar")

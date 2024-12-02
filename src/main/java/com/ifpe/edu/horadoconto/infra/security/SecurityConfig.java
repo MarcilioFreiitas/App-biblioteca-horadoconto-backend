@@ -28,11 +28,11 @@ public class SecurityConfig {
 	@Autowired
 	SecurityFilter securityFilter;
 	
-	  @Autowired
-	  UserDetailsService userDetailsService;
+	@Autowired
+	UserDetailsService userDetailsService;
 
-	  @Bean
-	    SecurityFilterChain securityFilterChain(HttpSecurity httpSecurity) throws Exception {
+	@Bean
+	SecurityFilterChain securityFilterChain(HttpSecurity httpSecurity) throws Exception {
 	        httpSecurity
 	            .cors(cors -> cors.configurationSource(request -> {
 	                CorsConfiguration config = new CorsConfiguration();

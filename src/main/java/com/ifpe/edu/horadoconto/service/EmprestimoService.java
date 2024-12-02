@@ -3,6 +3,7 @@ package com.ifpe.edu.horadoconto.service;
 import java.time.LocalDate;
 import java.util.Comparator;
 import java.util.List;
+import java.util.Optional;
 import java.util.stream.Collectors;
 
 import org.springframework.beans.factory.annotation.Autowired;
@@ -32,12 +33,10 @@ public class EmprestimoService {
 	EmailService emailService;
 
 	public Emprestimo emprestar(Emprestimo emprestimo) {
-	  
 	    if (emprestimo.getLivro() == null) {
 	        throw new IllegalArgumentException("O livro associado ao empréstimo não pode ser null.");
 	    }
 
-	   
 	    Livro livro = livroRepository.findById(emprestimo.getLivro().getId())
 	            .orElseThrow(() -> new RuntimeException("Livro não encontrado"));
 
@@ -47,18 +46,25 @@ public class EmprestimoService {
 	    if (emprestimo.getDataDevolucao().isAfter(dataMaximaDevolucao)) {
 	        throw new IllegalArgumentException("A data de devolução não pode ultrapassar um mês a partir da data de empréstimo.");
 	    }
-	    
-	    
+
 	    if (!livro.getDisponibilidade()) {
 	        throw new RuntimeException("Livro não está disponível para empréstimo");
 	    }
 
-	    
+	    // Verificar se já existe um empréstimo pendente para o mesmo livro e usuário
+	    Optional<Emprestimo> emprestimoPendente = emprestimorepository
+	            .findByUsuarioAndLivroAndStatusEmprestimo(emprestimo.getUsuario(), emprestimo.getLivro(), StatusEmprestimo.PENDENTE);
+
+	    if (emprestimoPendente.isPresent()) {
+	        throw new RuntimeException("Já existe um empréstimo pendente para este livro");
+	    }
+
 	    livroRepository.save(livro);
 
-	 
 	    return emprestimorepository.save(emprestimo);
 	}
+
+
 
 
 	public Emprestimo alterar(Long id, Emprestimo emprestimo) {
