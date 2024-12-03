@@ -70,8 +70,8 @@ public class EmprestimoController {
 	}
 	
 	@GetMapping("/listarEmprestimosUsuario/{id}")
-	public ResponseEntity<List<EmprestimoDTO>> listarEmprestimosUsuario(@PathVariable Long id) {
-	    List<EmprestimoDTO> emprestimos = emprestimoService.listarPorUsuario(id);
+	public ResponseEntity<List<EmprestimoDTO2>> listarEmprestimosUsuario(@PathVariable Long id) {
+	    List<EmprestimoDTO2> emprestimos = emprestimoService.listarPorUsuario(id);
 	    return ResponseEntity.ok(emprestimos);
 	}
 	

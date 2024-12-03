@@ -13,6 +13,7 @@ import org.springframework.transaction.annotation.Transactional;
 
 
 import com.ifpe.edu.horadoconto.controller.EmprestimoDTO;
+import com.ifpe.edu.horadoconto.controller.EmprestimoDTO2;
 import com.ifpe.edu.horadoconto.exception.ResourceNotFoundException;
 import com.ifpe.edu.horadoconto.model.Emprestimo;
 import com.ifpe.edu.horadoconto.model.Livro;
@@ -158,13 +159,13 @@ public class EmprestimoService {
     }
 
 
-    public List<EmprestimoDTO> listarPorUsuario(Long id) {
+    public List<EmprestimoDTO2> listarPorUsuario(Long id) {
         
         List<Emprestimo> emprestimos = emprestimorepository.findByUsuarioId(id);
 
         
         return emprestimos.stream()
-                .map(this::mapToEmprestimoDTO)
+                .map(this::mapToEmprestimoDTO2)
                 .collect(Collectors.toList());
     }
     
@@ -189,11 +190,27 @@ public class EmprestimoService {
                 emprestimo.getId(),
                 emprestimo.getUsuario().getNome(),
                 emprestimo.getLivro().getTitulo(),
+               
                 emprestimo.getDataRetirada(),
                 emprestimo.getDataDevolucao(),
                 emprestimo.getStatusEmprestimo()
         );
     }
+    
+    private EmprestimoDTO2 mapToEmprestimoDTO2(Emprestimo emprestimo) {
+        
+        return new EmprestimoDTO2(
+                emprestimo.getId(),
+                emprestimo.getUsuario().getNome(),
+                emprestimo.getLivro().getTitulo(),
+                emprestimo.getLivro().getImagem_capa(),
+               
+                emprestimo.getDataRetirada(),
+                emprestimo.getDataDevolucao(),
+                emprestimo.getStatusEmprestimo()
+        );
+    }
+    
     public Emprestimo devolver(Long id) {
         Emprestimo emprestimo = emprestimorepository.findById(id)
                 .orElseThrow(() -> new ResourceNotFoundException("Empréstimo não encontrado com o ID: " + id));

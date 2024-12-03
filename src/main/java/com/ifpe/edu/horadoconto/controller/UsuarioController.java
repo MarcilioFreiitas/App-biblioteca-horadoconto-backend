@@ -82,6 +82,7 @@ public class UsuarioController {
                         emprestimo.getId(), 
                         emprestimo.getUsuario().getNome(), 
                         emprestimo.getLivro().getTitulo(), 
+                        
                         emprestimo.getDataRetirada(), 
                         emprestimo.getDataDevolucao(), 
                         emprestimo.getStatusEmprestimo())
