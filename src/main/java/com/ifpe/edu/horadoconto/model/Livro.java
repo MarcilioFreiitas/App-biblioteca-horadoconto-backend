@@ -14,6 +14,7 @@ import jakarta.persistence.GenerationType;
 import jakarta.persistence.Id;
 import jakarta.persistence.OneToMany;
 import jakarta.validation.constraints.NotNull;
+import jakarta.validation.constraints.Size;
 
 @Entity
 public class Livro {
@@ -37,6 +38,7 @@ public class Livro {
 	
 	@Column(value = "TEXT")
 	@NotNull
+	@Size(max = 1000)
 	private String sinopse;
 
 	
