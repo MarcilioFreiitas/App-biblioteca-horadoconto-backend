@@ -19,8 +19,6 @@ import jakarta.persistence.OneToMany;
 import jakarta.validation.constraints.NotNull;
 import lombok.NoArgsConstructor;
 
-
-
 @Entity
 @NoArgsConstructor
 public class Usuario implements UserDetails {
@@ -59,8 +57,7 @@ public class Usuario implements UserDetails {
 	    
 
 		
-	    public Usuario() {
-	    }
+	   
 	    
 	    public Usuario (String nome, String sobreNome, String cpf,String email, String encryptedPassword, UserRoles role){
 	        this.nome = nome;
