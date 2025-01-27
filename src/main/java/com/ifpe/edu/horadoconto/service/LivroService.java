@@ -45,8 +45,16 @@ public class LivroService {
 
         // Aqui você pode adicionar o código para salvar a imagem e definir o caminho da imagem
         try {
+            // Defina o caminho absoluto para salvar a imagem dentro do contêiner
+            String pastaUpload = "/usr/share/app/imagens/capas/";
+            Path filePath = Paths.get(pastaUpload + imagem.getOriginalFilename());
+
+            // Crie o diretório se não existir
+            if (!Files.exists(filePath.getParent())) {
+                Files.createDirectories(filePath.getParent());
+            }
+
             // Salva a imagem no diretório
-            Path filePath = Paths.get("src/main/resources/static/imagens/capas/" + imagem.getOriginalFilename());
             Files.write(filePath, imagem.getBytes());
 
             // Atualiza o caminho da imagem da capa do livro
@@ -55,7 +63,6 @@ public class LivroService {
             e.printStackTrace();
             throw new RuntimeException("Erro ao fazer upload da imagem", e);
         }
-
 
         // Salve o livro e retorne
         return this.repository.save(livro);
