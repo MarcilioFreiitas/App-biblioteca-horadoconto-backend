@@ -7,12 +7,13 @@ import org.springframework.web.servlet.config.annotation.WebMvcConfigurer;
 @Configuration
 public class WebConfig implements WebMvcConfigurer {
 
-    @Override
-    public void addResourceHandlers(ResourceHandlerRegistry registry) {
-        // Servindo as imagens
-        registry.addResourceHandler("/imagens/capas/**")
-                .addResourceLocations("file:src/main/resources/static/imagens/capas/");
-        
+	@Override
+	public void addResourceHandlers(ResourceHandlerRegistry registry) {
+	    // Servindo as imagens
+	    registry.addResourceHandler("/imagens/capas/**")
+	            .addResourceLocations("file:/usr/share/app/imagens/capas/");
+	
+
         // Servindo o arquivo de redefinição de senha
         registry.addResourceHandler("/password-reset.html")
                 .addResourceLocations("classpath:/static/");
