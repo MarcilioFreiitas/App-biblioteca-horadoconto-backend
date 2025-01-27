@@ -19,7 +19,8 @@ COPY --from=build /target/horadoconto-0.0.1-SNAPSHOT.jar app.jar
 # Copiar as imagens para o diretório desejado no contêiner
 COPY --from=build /src/main/resources/static/imagens/capas /usr/share/app/imagens/capas
 
-# Definir as permissões das imagens
-RUN chmod -R 755 /usr/share/app/imagens/capas
+# Copiar e usar o script de inicialização
+COPY entrypoint.sh /entrypoint.sh
+RUN chmod +x /entrypoint.sh
 
-ENTRYPOINT [ "java", "-jar", "app.jar" ]
+ENTRYPOINT ["/entrypoint.sh", "java", "-jar", "app.jar"]
